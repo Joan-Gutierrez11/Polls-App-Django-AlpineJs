@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block 'global-admin-css-styles' %}
+    <link rel="stylesheet" href="{% static 'shared/css/index.css' %}">
+{% endblock %}
+
+{% block 'body-content' %}
+    <section id="top-navbar">
+        {% include 'base/layouts/top-navbar.html' %}
+    </section>
+
+    <section id="wrapper-content">
+        <aside id='sidebar' class="">
+            {% include 'base/layouts/side-navbar.html' %}
+        </aside>
+        
+        <main class="mt-3">
+            <div class="container-fluid">
+                {% block 'content' %}{% endblock %}
+            </div>      
+        </main>  
+    </section>
+{% endblock %}
+
+{% block 'global-admin-js-scripts' %}
+    <script src="{% static 'shared/js/index.js' %}"></script>
+{% endblock %}

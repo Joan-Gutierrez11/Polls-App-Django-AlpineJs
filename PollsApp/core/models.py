@@ -16,7 +16,7 @@ class SafeDeleteAbstractClass(models.Model):
             raise NotImplementedError('This class not indicate the status field')
 
         if not self.__getattribute__('pk'):
-            raise NotImplementedError("This object hadn't save in database")
+            raise TypeError("This object hadn't save in database")
 
     def safe_delete(self):
         self._check_errors()

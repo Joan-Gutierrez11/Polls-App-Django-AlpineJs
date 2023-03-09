@@ -1,1 +1,5 @@
 db.sqlite3
+
+media/
+
+**/jsconfig.json

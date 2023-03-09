@@ -1,0 +1,170 @@
+:root {
+    --width-side-bar: 22.5%;
+    --width-container-section: 100%;
+}
+
+html, body {
+    height: 100%;
+}
+
+/*
+    Top navbar
+*/
+
+#top-navbar {
+    background-color: #367fa9;
+    color: #fff;
+}
+
+#top-navbar button {
+    background-color: transparent;
+    border: 0;
+    font-size: 2rem;
+    color: #fff;
+    height: 100%;
+}
+
+#top-navbar button:hover {
+    background-color: #3e96c9b1;
+    border: 0;
+    font-size: 2rem;
+}
+
+/* 
+    Wrapper Styles 
+*/
+
+#wrapper-content {
+    display: flex;
+}
+
+aside {
+    position: relative;
+    width: 0px;
+    left: calc(var(--width-side-bar) * -1);    
+}
+
+aside:first-of-type {
+    transition: all 0.9s;
+}
+
+main {
+    width: var(--width-container-section);
+    max-width: 100%;
+}
+
+.show {
+    width: var(--width-side-bar);
+    left: 0px;
+    --width-container-section: calc(var(--width-container-section) - var(--width-side-bar));
+}
+
+/* Sidebar */
+
+#sidebar {
+    background-color: #222d32;
+}
+
+#sidebar > nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.5fr 2fr 0.25fr;
+}
+
+/* 
+    Sidebar
+    Header Sidebar 
+*/
+
+.header-navbar {
+    width: 100%;
+    padding: 0 0.5rem;
+    display: grid;
+    grid-template-columns: 0.3fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 10px;
+    align-items: center;
+}
+
+.header-navbar > div:nth-child(1) {
+    width: 6rem;
+    height: 6rem;
+}
+
+.header-navbar > div:nth-child(1) > img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.header-navbar > div:nth-child(2) {
+    color: white;
+    font-style: normal;
+    font-weight: 600;
+}
+
+
+/* 
+    Sidebar
+    Navbar items 
+*/
+
+#sidebar ul {
+    align-self: self-start;
+}
+
+#sidebar ul * {
+    font-size: 1.25rem;
+    font-weight: lighter;
+}
+
+.nav-item {
+    padding: 0.5rem;
+}
+
+#sidebar .nav-item:hover {
+    background-color: #42586275;
+}
+
+#sidebar a.nav-link {
+    display: grid; 
+    grid-template-columns: 0.25fr 1fr;
+    grid-template-rows: 1fr; 
+    gap: 0px 10px;
+    align-items: center;
+    color: #b8c7ce;
+    height: 100%;
+    width: 100%;
+}
+
+#sidebar .nav-link:hover, #sidebar .nav-link:focus  {
+    color: #d6ecf7d3;
+    font-weight: 750;
+    font-size: 1.28rem;
+}
+
+/* 
+    Sidebar
+    Footer
+*/
+
+#sidebar > nav > .footer-navbar {
+    position: relative;
+    bottom: 0px;
+    color: white;
+}
+
+@media (max-width:950px) {
+    
+    #sidebar {
+        position: absolute;
+        z-index: 1;
+        height: 100%;
+    }
+
+    .show {
+        width: 250px;
+    }
+
+}

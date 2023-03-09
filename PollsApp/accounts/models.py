@@ -7,4 +7,4 @@ from core.models import SafeDeleteAbstractClass
 class User(AbstractUser, SafeDeleteAbstractClass):
     STATUS_FIELD = 'is_active'
 
-    photo = models.ImageField(null=True)
+    photo = models.ImageField(upload_to="users/photo-profiles/%Y/%m/%d", null=True)

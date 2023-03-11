@@ -1,13 +1,14 @@
 <nav class="navbar">
     <div class="container-fluid">
-        <button id='toggle-sidebar' type="button">
+        <button id='toggle-sidebar' type="button" x-data="ButtonToggleComponent" 
+            x-on:click="toggleSidebar()">
             <i class="bi bi-list"></i>
         </button>
         <div class="navbar">
             <ul class="nav">
-                <li class="nav-item">Option 1</li>
-                <li class="nav-item">Option 2</li>
-                <li class="nav-item">Option 3</li>
+                <li class="nav-item px-2">Option 1</li>
+                <li class="nav-item px-2">Option 2</li>
+                <li class="nav-item px-2">Option 3</li>
             </ul>
         </div>
     </div>

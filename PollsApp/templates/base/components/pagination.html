@@ -1,0 +1,39 @@
+{% load pagination %}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a href="?{% get_pagination_url request.GET page_obj.previous_page_number %}" class="page-link">
+                    Prev
+                </a>
+            </li>
+        {% endif%}
+
+        {% for page_number in pages_number %}
+            {% if page_number == page_obj.paginator.ELLIPSIS %}
+                <li class="page-item disabled">
+                    <a href="" class="page-link">
+                        {{page_number}}
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a href="?{% get_pagination_url request.GET page_number %}"
+                        class="page-link {% if page_number == page_obj.number %} active {% endif %}">
+                        {{page_number}}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a href="?{% get_pagination_url request.GET page_obj.next_page_number %}" class="page-link">
+                    Next
+                </a>
+            </li>
+        {% endif%}
+    </ul>
+</nav>
+    

@@ -1,0 +1,79 @@
+{% extends 'base/base-admin.html' %}
+
+{% load static %}
+{% load pagination %}
+
+{% block 'css-styles' %}
+    <link rel="stylesheet" href="{% static 'accounts/css/users/list_users.css' %}">
+    <link rel="stylesheet" href="{% static 'shared/css/pagination.css' %}">
+{% endblock  %}
+
+{% block 'title' %}
+    Users
+{% endblock %}
+
+{% block 'content' %}
+    <div>
+        <section class="p-3">
+            <h1>Users</h1>
+            <hr class="hr"/>
+        </section>
+        
+        <section class="mb-4 px-3">
+            <form action="{% url 'accounts:list-users' %}" method="GET">
+                <div class="d-flex justify-content-end">
+                    <div class="input-group w-50">
+                        {{ search_form.username_email }}
+                        <button type="button" id="reset-btn" class="btn btn-outline-secondary" x-init=""
+                            x-on:click="location.href = '{% url 'accounts:list-users' %}'">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Reset
+                        </button>
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="bi bi-search me-2"></i>Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    
+        <section class="px-3 mb-4">
+            <div class="table-responsive sticky-table-header">
+                <table class="table">
+                    <thead class="table-header-divider">
+                      <tr>
+                        <th scope="col">Profile Image</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Complete Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Date Joined</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td class="align-middle">
+                                    <img src="{{user.photo.url}}" class="img-fluid avatar-img" alt="{{user.username}}">
+                                </td>
+                                <td>{{user.username}}</td>
+                                <td>{{user.first_name}} {{user.last_name}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.date_joined}}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5">No users found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>    
+            </div>
+        </section>
+        
+        <section class="d-flex justify-content-end my-2 px-3 pagination-users">
+            {% pagination %}
+        </section>
+    </div>
+{% endblock %}
+
+{% block 'js-scripts' %}
+{% endblock %}

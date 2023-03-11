@@ -10,27 +10,38 @@
             <span>State</span>
         </div>
     </div>
-    <ul class="navbar-nav w-100">
-        <li class="nav-item px-4">
-            <a class="nav-link" href="#">
+    <ul class="navbar-nav w-100" 
+        x-data="{
+            sectionSelected: $persist('').using(sessionStorage)
+        }">
+        <li class="nav-item" data-section="home" 
+            x-on:click="sectionSelected = $el.dataset.section"
+            x-bind:class="sectionSelected == $el.dataset.section && 'active'">
+            <a class="nav-link p-4" href="{% url 'polls:index' %}">
                 <i class="bi bi-house"></i>
                 <span>Home</span>
             </a>
         </li>
-        <li class="nav-item px-4">
-            <a class="nav-link" href="#">
+        <li class="nav-item" data-section="users"
+            x-on:click="sectionSelected = $el.dataset.section"
+            x-bind:class="sectionSelected == $el.dataset.section && 'active'">
+            <a class="nav-link p-4" href="{% url 'accounts:list-users' %}">
                 <i class="bi bi-person-circle"></i>
                 <span>Users</span>
             </a>
         </li>
-        <li class="nav-item px-4">
-            <a class="nav-link" href="#">
+        <li class="nav-item" data-section="polls"
+            x-on:click="sectionSelected = $el.dataset.section"
+            x-bind:class="sectionSelected == $el.dataset.section && 'active'">
+            <a class="nav-link p-4" href="#">
                 <i class="bi bi-clipboard-check-fill"></i>
                 <span>Polls</span>
             </a>
         </li>
-        <li class="nav-item px-4">
-            <a class="nav-link" href="#">
+        <li class="nav-item" data-section="roles"
+            x-on:click="sectionSelected = $el.dataset.section"
+            x-bind:class="sectionSelected == $el.dataset.section && 'active'">
+            <a class="nav-link p-4" href="#">
                 <i class="bi bi-people-fill"></i>
                 <span>Roles</span>
             </a>

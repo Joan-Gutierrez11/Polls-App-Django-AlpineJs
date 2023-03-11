@@ -1,0 +1,28 @@
+:root {
+    --link-pagination-color: rgb(195, 0, 0);
+    --link-pagination-background-color: rgb(195, 0, 0);
+    --link-pagination-hover-background-color: rgba(164, 1, 1, 0.044);
+    --link-pagination-box-shadow: 0 0 0 0.25rem rgba(195, 0, 0, 0.444);
+}
+
+.page-link {
+    color: var(--link-pagination-color);
+}
+
+.page-link.active {
+    background-color: var(--link-pagination-background-color);
+    border-color: var(--link-pagination-color);
+}
+
+.page-link:hover {
+    color: var(--link-pagination-color);
+    background-color: var(--link-pagination-hover-background-color);
+}
+
+.page-link:focus {
+    box-shadow: var(--link-pagination-box-shadow);
+}
+
+.page-link.active:hover {
+    color: #fff;
+}

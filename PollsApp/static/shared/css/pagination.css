@@ -22,7 +22,3 @@
 .page-link:focus {
     box-shadow: var(--link-pagination-box-shadow);
 }
-
-.page-link.active:hover {
-    color: #fff;
-}

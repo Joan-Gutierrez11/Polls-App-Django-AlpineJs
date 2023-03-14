@@ -1,0 +1,86 @@
+{% extends 'base/base-admin.html' %}
+
+{% load static %}
+{% load admin_tags %}
+
+{% block 'js-headers-scripts' %}
+    <script src="{% static 'shared/js/image_preview.js' %}"></script>
+{% endblock %}
+
+{% block 'css-styles' %}
+    <link rel="stylesheet" href="{% static 'accounts/css/users/add_users.css' %}">
+{% endblock  %}
+
+{% block 'title' %} Update User {% endblock  %}
+
+{% block 'content' %}
+
+    {% if messages and form.errors %}
+    
+        {% modal %}
+            {% include 'base/components/modals/form_error_modal.html' with messages=messages form=form %}
+        {% endmodal %}
+
+    {% elif messages %}
+        
+        {% modal %}
+            <div class="modal-body">
+                <div class="d-flex">
+                    <div class="m-3 icon d-flex justify-content-center">
+                        <i class="info bi bi-info-circle-fill"></i>
+                    </div>
+                    <div class="message-info d-flex align-items-center">
+                        {% for msg in messages %}
+                            <h4>{{ msg }}</h4>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'accounts:list-users' %}" type="button" class="btn btn-primary">Ok</a>
+            </div>
+        {% endmodal %}
+
+    {% endif %}
+
+    <section class="p-3">
+        <h1>Update User</h1>
+        <hr class="hr my-2"/>
+    </section>
+
+    <section class="px-3">
+        <div class="my-4 px-3 d-flex justify-content-center">
+            {% if user.photo %}
+                <img src="{{ user.photo.url|default:'static/shared/images/avatar-photo-empty.jpg' }}" alt="avatar-photo" id="img-profile-preview" class="">
+            {% else %}
+                <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" alt="avatar-photo" id="img-profile-preview" class="">
+            {% endif %}
+        </div>
+        <form action="{% url 'accounts:update-users' user.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3 row">
+                    <label for="{{ field.id_for_label }}" class="col-sm-2 col-form-label">{{ field.label }}:</label>
+                    <div class="col-sm-10">
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <div class="text-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="mt-4 btn btn-primary btn-lg">
+                <i class="bi bi-plus-circle-fill me-2"></i>Update User
+            </button>
+        </form>
+    </section>
+
+{% endblock %}
+
+{% block 'js-scripts' %}
+    <script>
+        imagePreview({ imgSelector:'#img-profile-preview', fileInputSelector:"input[name='photo']" });
+    </script>
+{% endblock %}

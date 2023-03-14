@@ -1,29 +1,40 @@
 {% extends 'base/base-admin.html' %}
 
 {% load static %}
-{% load pagination %}
+{% load admin_tags %}
 
 {% block 'css-styles' %}
     <link rel="stylesheet" href="{% static 'accounts/css/users/list_users.css' %}">
-    <link rel="stylesheet" href="{% static 'shared/css/pagination.css' %}">
+    <link rel="stylesheet" href="{% static 'shared/css/modals.css' %}">
 {% endblock  %}
 
-{% block 'title' %}
-    Users
-{% endblock %}
+{% block 'title' %} Users {% endblock %}
 
 {% block 'content' %}
+    
+    {% if messages %}
+        {% modal %}
+            {% include 'accounts/users/delete_success.html' with messages=messages %}
+        {% endmodal %}
+    {% endif %}
+
     <div>
         <section class="p-3">
-            <h1>Users</h1>
-            <hr class="hr"/>
+            <div class="d-flex justify-content-between">
+                <h1>Users</h1>
+                <a href="{% url 'accounts:add-users' %}" role="button" class="btn btn-success fs-4">
+                    <i class="me-3 bi bi-database-fill-add"></i>
+                    <span>Add User</span>
+                </a>
+            </div>
+            <hr class="hr my-2"/>
         </section>
         
         <section class="mb-4 px-3">
             <form action="{% url 'accounts:list-users' %}" method="GET">
                 <div class="d-flex justify-content-end">
                     <div class="input-group w-50">
-                        {{ search_form.username_email }}
+                        {{ filter_form.username_email }}
                         <button type="button" id="reset-btn" class="btn btn-outline-secondary" x-init=""
                             x-on:click="location.href = '{% url 'accounts:list-users' %}'">
                             <i class="bi bi-arrow-clockwise me-2"></i>Reset
@@ -46,22 +57,53 @@
                         <th scope="col">Complete Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Date Joined</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                         {% for user in users %}
                             <tr>
                                 <td class="align-middle">
-                                    <img src="{{user.photo.url}}" class="img-fluid avatar-img" alt="{{user.username}}">
+                                    {% if user.photo %}
+                                        <img src="{{user.photo.url}}" class="img-fluid avatar-img" 
+                                            alt="{{user.username}}">
+                                    {% else %}
+                                        <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" 
+                                            class="img-fluid avatar-img" alt="{{user.username}}">
+                                    {% endif %}                
                                 </td>
                                 <td>{{user.username}}</td>
                                 <td>{{user.first_name}} {{user.last_name}}</td>
                                 <td>{{user.email}}</td>
                                 <td>{{user.date_joined}}</td>
+                                <td class="fs-5">
+                                    {% if user.is_active %}
+                                        <span class="badge bg-success">Active account</span>                                    
+                                    {% else %}
+                                        <span class="badge bg-danger">Disable account</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="d-flex w-100">
+                                        <a href="{% url 'accounts:update-users' user.id %}" 
+                                            role="button" class="btn btn-outline-success me-3 fs-5">
+                                            <i class="bi bi-arrow-bar-up"></i>
+                                        </a>
+                                        <button class="btn btn-outline-danger me-3 fs-5"
+                                            onclick="chargeDeleteModal('{% url 'accounts:delete-users' user.id %}', '#info-modal')">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-warning me-3 fs-5"
+                                            onclick="chargeDeleteModal('{% url 'accounts:safe-delete-users' user.id %}', '#info-modal')" >
+                                            <i class="bi bi-lock-fill"></i>    
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="5">No users found</td>
+                                <td colspan="6">No users found</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -73,7 +115,12 @@
             {% pagination %}
         </section>
     </div>
+
+    <div class="modal fade" id="info-modal" tabindex="-1" aria-labelledby="modal" data-bs-backdrop="static" data-bs-keyboard="false" 
+        aria-hidden="true" role="dialog"></div>
+
 {% endblock %}
 
 {% block 'js-scripts' %}
+    <script src="{% static 'accounts/js/users/users.js' %}"></script>
 {% endblock %}

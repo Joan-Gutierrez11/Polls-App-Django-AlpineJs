@@ -6,9 +6,7 @@
     <link rel="stylesheet" href="{% static 'shared/css/index.css' %}">
 {% endblock %}
 
-{% block 'js-headers-scripts' %}
-    <script src="{% static 'shared/js/index.js' %}"></script>
-{% endblock %}
+{% block 'title' %} Dashboard Admin {% endblock  %}
 
 {% block 'body-content' %}
     <div id="root-content">
@@ -20,8 +18,8 @@
         <section id="wrapper-content">
             
             <!-- Sidebar Component -->
-            <aside x-data="SidebarComponent" id="sidebar" x-bind:class="openSidebar && 'show'"
-                x-on:toggle-sidebar.window="toggle()">
+            <aside x-data="SidebarComponent" id="sidebar" class=""
+                x-bind:class="openSidebar && 'show'" x-on:toggle-sidebar.window="toggle()">
                 {% include 'base/layouts/side-navbar.html' %}
             </aside>
             
@@ -34,8 +32,10 @@
 
         </section>
     </div>
+
+    {% block 'extras' %}{% endblock  %}
 {% endblock %}
 
 {% block 'global-admin-js-scripts' %}
-    {% comment %} <script src="{% static 'shared/js/index.js' %}"></script> {% endcomment %}
+    <script src="{% static 'shared/js/index.js' %}"></script>
 {% endblock %}

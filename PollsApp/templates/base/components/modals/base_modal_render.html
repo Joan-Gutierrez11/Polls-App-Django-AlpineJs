@@ -1,0 +1,16 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'shared/css/modals.css' %}">
+
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" 
+    data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            {{ content }}
+        </div>
+    </div>
+</div>
+
+<script type="application/javascript">
+    $(window).on('load', () => $('#modal').modal('show'));
+</script>

@@ -69,7 +69,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries': {
-                'pagination': 'core.templatetags.pagination_tables', # add pagination template tags
+                'admin_tags': 'core.templatetags.admin_tags', # add utils admin tags
             }
         },
     },

@@ -52,4 +52,4 @@ $(window).on({
         resizeHeightContent('#wrapper-content');
         resizeHeightContent('#sidebar', 16);
     }
-})
+});

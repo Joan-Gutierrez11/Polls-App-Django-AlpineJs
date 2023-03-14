@@ -1,0 +1,17 @@
+.info-container {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr;
+    height: 100%;
+}
+
+.icon {
+    font-size: 7.5em;
+}
+
+.info {
+    color: rgb(71, 140, 225);
+}
+
+.error {
+    color: rgb(241, 76, 25);
+}

@@ -4,7 +4,7 @@
 {% load admin_tags %}
 
 {% block 'css-styles' %}
-    <link rel="stylesheet" href="{% static 'accounts/css/users/list_users.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/css/users.css' %}">
     <link rel="stylesheet" href="{% static 'shared/css/modals.css' %}">
 {% endblock  %}
 
@@ -31,20 +31,41 @@
         </section>
         
         <section class="mb-4 px-3">
-            <form action="{% url 'accounts:list-users' %}" method="GET">
-                <div class="d-flex justify-content-end">
-                    <div class="input-group w-50">
-                        {{ filter_form.username_email }}
-                        <button type="button" id="reset-btn" class="btn btn-outline-secondary" x-init=""
-                            x-on:click="location.href = '{% url 'accounts:list-users' %}'">
-                            <i class="bi bi-arrow-clockwise me-2"></i>Reset
-                        </button>
-                        <button class="btn btn-outline-secondary" type="submit">
-                            <i class="bi bi-search me-2"></i>Search
-                        </button>
-                    </div>
+            <div x-data="CollapseFilterSectionComponent">
+                <div class="w-100 mb-2">
+                    <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse-filters" aria-expanded="false" aria-controls="collapse-filters"
+                        x-bind="button">
+                        <i class="bi bi-funnel me-2"></i>Filters
+                    </button>
                 </div>
-            </form>
+                <div class="collapse" id="collapse-filters" x-bind="filter">
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Filters</legend>
+                        <form action="{% url 'accounts:list-users' %}" method="GET">
+                            <div class="row g-2 mb-3">
+                                {% for field in filter_form %}
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            {{ field }}
+                                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" id="reset-btn" class="btn btn-outline-secondary me-2" x-init=""
+                                    x-on:click="location.href = '{% url 'accounts:list-users' %}'">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Reset
+                                </button>
+                                <button class="btn btn-outline-secondary me-2" type="submit">
+                                    <i class="bi bi-search me-2"></i>Search
+                                </button>
+                            </div>
+                        </form>
+                    </fieldset>
+                </div>
+            </div>
         </section>
     
         <section class="px-3 mb-4">
@@ -61,7 +82,7 @@
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-group-divider">
                         {% for user in users %}
                             <tr>
                                 <td class="align-middle">
@@ -91,11 +112,12 @@
                                             <i class="bi bi-arrow-bar-up"></i>
                                         </a>
                                         <button class="btn btn-outline-danger me-3 fs-5"
-                                            onclick="chargeDeleteModal('{% url 'accounts:delete-users' user.id %}', '#info-modal')">
+                                            onclick="chargePageModalByURL('{% url 'accounts:delete-users' user.id %}', '#info-modal')">
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
                                         <button type="button" class="btn btn-outline-warning me-3 fs-5"
-                                            onclick="chargeDeleteModal('{% url 'accounts:safe-delete-users' user.id %}', '#info-modal')" >
+                                            {% if not user.is_active %} disabled {% endif %}
+                                            onclick="chargePageModalByURL('{% url 'accounts:safe-delete-users' user.id %}', '#info-modal')" >
                                             <i class="bi bi-lock-fill"></i>    
                                         </button>
                                     </div>
@@ -103,7 +125,7 @@
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="6">No users found</td>
+                                <td colspan="7">No users found</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -122,5 +144,5 @@
 {% endblock %}
 
 {% block 'js-scripts' %}
-    <script src="{% static 'accounts/js/users/users.js' %}"></script>
+    <script src="{% static 'accounts/js/users.js' %}"></script>
 {% endblock %}

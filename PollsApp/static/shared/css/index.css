@@ -5,12 +5,20 @@
 
 html, body {
     height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
+#root-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
 
 #wrapper-content {
     display: flex;
     height: inherit;
+    flex: 1;
 }
 
 /*
@@ -49,9 +57,6 @@ main {
     max-width: 100%;
 }
 
-#root-content {
-    height: inherit;
-}
 
 /* Sidebar */
 
@@ -59,7 +64,6 @@ main {
     position: relative;
     background-color: #222d32;
     width: var(--width-side-bar);
-    height: inherit;
     margin-left: calc(var(--width-side-bar)*-1);
 }
 

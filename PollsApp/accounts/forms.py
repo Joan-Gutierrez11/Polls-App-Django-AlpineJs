@@ -3,23 +3,37 @@ from django.http import QueryDict
 
 from core.filters import FilterForm
 
-from accounts.filters import UserFilterByUsernameAndEmail
+from accounts.filters import UserFilter
 from accounts.models import User
 
-class SearchUserForm(FilterForm):
-    filter_class = UserFilterByUsernameAndEmail
+class FilterUserForm(FilterForm):
+    OPTIONS = [('', 'Default'),] + User.TypeUsers.choices 
+    filter_class = UserFilter
 
-    username_email = forms.CharField(
-        label='Search',
-        max_length=250,
+    username = forms.CharField(
+        label='Username',
+        max_length=50,
         required=False,
         widget= forms.widgets.TextInput(
-            attrs= {
-                'class': 'form-control',
-                'placeholder': 'Search by username or email',
-            }
+            attrs={ 'class':'form-control' }
         )
     )
+    email = forms.EmailField(
+        label='Email',
+        required=False,
+        widget=forms.widgets.EmailInput(
+            attrs={ 'class':'form-control' }
+        )
+    )
+    type_user = forms.ChoiceField(
+        label='Type of user',
+        choices=OPTIONS,
+        required=False,
+        widget=forms.widgets.Select(
+            attrs={ 'class': 'form-select' }
+        )
+    )
+
 
 
 class UserCreateForm(forms.ModelForm):
@@ -41,10 +55,11 @@ class UserCreateForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ('photo', 'username', 'first_name', 'last_name', 'email')
+        fields = ('photo', 'username', 'first_name', 'last_name', 'email', 'is_active')
         widgets = {
             'username': forms.widgets.TextInput(attrs= {'class': 'form-control'}),
             'first_name': forms.widgets.TextInput(attrs= {'class': 'form-control'}),
             'last_name': forms.widgets.TextInput(attrs= {'class': 'form-control'}),
             'email': forms.widgets.EmailInput(attrs= {'class': 'form-control'}),
+            'is_active': forms.widgets.CheckboxInput(attrs={'class':'form-check-input ms-0 fs-3'})
         }

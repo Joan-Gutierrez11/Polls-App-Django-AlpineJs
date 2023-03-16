@@ -1,0 +1,31 @@
+:root {
+    --size-of-profile-image-table: 4rem;
+    --size-img-profile-form: 30%;
+}
+
+.avatar-img {
+    width: var(--size-of-profile-image-table);
+    height: var(--size-of-profile-image-table);
+    border-radius: 50%;
+}
+
+.pagination-users > nav > ul > li > a {
+    font-size: 1.1rem;
+}
+
+table.table > thead > tr {
+    font-size: 1.1rem;
+}
+
+table.table > tbody > tr:first-child td {
+    padding-top: 1.2rem;
+}
+
+.size-logo-button {
+    font-size: 1.55rem;
+}
+
+#img-profile-preview {
+    width: var(--size-img-profile-form);
+    height: var(--size-img-profile-form);
+}

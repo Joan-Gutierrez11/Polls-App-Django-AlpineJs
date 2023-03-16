@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block 'css-styles' %}
-    <link rel="stylesheet" href="{% static 'accounts/css/users/add_users.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/css/users.css' %}">
 {% endblock  %}
 
 {% block 'title' %} Update User {% endblock  %}
@@ -48,7 +48,7 @@
         <hr class="hr my-2"/>
     </section>
 
-    <section class="px-3">
+    <section class="px-3 mb-3">
         <div class="my-4 px-3 d-flex justify-content-center">
             {% if user.photo %}
                 <img src="{{ user.photo.url|default:'static/shared/images/avatar-photo-empty.jpg' }}" alt="avatar-photo" id="img-profile-preview" class="">
@@ -61,7 +61,7 @@
             {% for field in form %}
                 <div class="mb-3 row">
                     <label for="{{ field.id_for_label }}" class="col-sm-2 col-form-label">{{ field.label }}:</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-10 {% if field.name == 'is_active' %} form-check form-switch ps-3 {% endif %}">
                         {{ field }}
                         {% for error in field.errors %}
                             <div class="text-danger">

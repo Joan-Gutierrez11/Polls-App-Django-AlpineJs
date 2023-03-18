@@ -1,16 +1,11 @@
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'shared/css/modals.css' %}">
-
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" 
+<div class="modal fade" id="bootstrap-modal" tabindex="-1" aria-labelledby="modalLabel"
     data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" role="dialog">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            {{ content }}
+            {% block 'modal-content' %}{% endblock %}
         </div>
     </div>
 </div>
-
 <script type="application/javascript">
-    $(window).on('load', () => $('#modal').modal('show'));
+    $(window).on('load', () => $('#bootstrap-modal').modal('show'));
 </script>

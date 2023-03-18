@@ -36,7 +36,7 @@ class FilterUserForm(FilterForm):
 
 
 
-class UserCreateForm(forms.ModelForm):
+class UserForm(forms.ModelForm):
     photo = forms.ImageField(
         required=False,
         widget=forms.widgets.FileInput(
@@ -51,7 +51,7 @@ class UserCreateForm(forms.ModelForm):
             self.instance.save()
             return self.instance
 
-        return super(UserCreateForm, self).save()
+        return super(UserForm, self).save()
     
     class Meta:
         model = User

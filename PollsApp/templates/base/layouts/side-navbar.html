@@ -6,8 +6,12 @@
             <img src="{% static 'shared/images/avatar-imagen.jpg' %}" alt="avatar-imagen">
         </div>
         <div class="d-flex flex-column">
-            <span>Username</span>
-            <span>State</span>
+            <span>{{ user.username|default:'Username' }}</span>
+            <span>
+                {% if user.is_active %}
+                    <span class="badge bg-success">Active</span>
+                {% endif %}
+            </span>
         </div>
     </div>
     <ul class="navbar-nav w-100" 

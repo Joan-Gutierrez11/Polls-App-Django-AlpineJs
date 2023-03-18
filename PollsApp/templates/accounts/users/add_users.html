@@ -5,43 +5,19 @@
 
 {% block 'css-styles' %}
     <link rel="stylesheet" href="{% static 'accounts/css/users.css' %}">
+    <link rel="stylesheet" href="{% static 'shared/css/modals.css' %}">
 {% endblock  %}
-
-{% block 'js-headers-scripts' %}
-    <script src="{% static 'shared/js/image_preview.js' %}"></script>
-{% endblock %}
 
 {% block 'title' %} Add Users {% endblock %}
 
 {% block 'content' %}
 
     {% if messages and form.errors %}
-        
-        {% modal %}
-            {% include 'base/components/modals/form_error_modal.html' with messages=messages form=form %}
-        {% endmodal %}
-
-    {% elif messages %}
-        
-        {% modal %}
-            <div class="modal-body">
-                <div class="d-flex">
-                    <div class="m-3 icon d-flex justify-content-center">
-                        <i class="info bi bi-info-circle-fill"></i>
-                    </div>
-                    <div class="message-info d-flex align-items-center">
-                        {% for msg in messages %}
-                            <h4>{{ msg }}</h4>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stay Here</button>
-                <a href="{% url 'accounts:list-users' %}" type="button" class="btn btn-primary">Go Back</a>
-            </div>
-        {% endmodal %}
-
+        {% with messages=messages form=form %}
+            {% include 'base/components/form-fail-modal.html' %}
+        {% endwith %}
+    {% elif messages %}        
+        {% include 'accounts/users/modals/add_success.html' with messages=messages %}
     {% endif %}
 
     <section class="p-3">

@@ -1,0 +1,22 @@
+{% extends 'base/components/modal.html' %}
+
+{% block 'modal-content' %}
+    <div class="modal-body">
+        <div class="d-flex">
+            <div class="m-3 icon d-flex justify-content-center">
+                <i class="info bi bi-info-circle-fill"></i>
+            </div>
+            <div class="message-info d-flex align-items-center">
+                {% for msg in messages %}
+                    <h4>{{ msg }}</h4>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok-delete-user-button" type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+    </div>
+    <script>
+        $('#ok-delete-user-button').on('click', () => window.location.reload());
+    </script>
+{% endblock  %}

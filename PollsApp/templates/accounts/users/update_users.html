@@ -1,14 +1,10 @@
 {% extends 'base/base-admin.html' %}
 
 {% load static %}
-{% load admin_tags %}
-
-{% block 'js-headers-scripts' %}
-    <script src="{% static 'shared/js/image_preview.js' %}"></script>
-{% endblock %}
 
 {% block 'css-styles' %}
     <link rel="stylesheet" href="{% static 'accounts/css/users.css' %}">
+    <link rel="stylesheet" href="{% static 'shared/css/modals.css' %}">
 {% endblock  %}
 
 {% block 'title' %} Update User {% endblock  %}
@@ -16,31 +12,9 @@
 {% block 'content' %}
 
     {% if messages and form.errors %}
-    
-        {% modal %}
-            {% include 'base/components/modals/form_error_modal.html' with messages=messages form=form %}
-        {% endmodal %}
-
+        {% include 'base/components/form-fail-modal.html' with messages=messages form=form %}
     {% elif messages %}
-        
-        {% modal %}
-            <div class="modal-body">
-                <div class="d-flex">
-                    <div class="m-3 icon d-flex justify-content-center">
-                        <i class="info bi bi-info-circle-fill"></i>
-                    </div>
-                    <div class="message-info d-flex align-items-center">
-                        {% for msg in messages %}
-                            <h4>{{ msg }}</h4>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a href="{% url 'accounts:list-users' %}" type="button" class="btn btn-primary">Ok</a>
-            </div>
-        {% endmodal %}
-
+        {% include 'accounts/users/modals/update_success.html' with messages=messages %}
     {% endif %}
 
     <section class="p-3">
@@ -51,7 +25,7 @@
     <section class="px-3 mb-3">
         <div class="my-4 px-3 d-flex justify-content-center">
             {% if user.photo %}
-                <img src="{{ user.photo.url|default:'static/shared/images/avatar-photo-empty.jpg' }}" alt="avatar-photo" id="img-profile-preview" class="">
+                <img src="{{ user.photo.url }}" alt="avatar-photo" id="img-profile-preview" class="">
             {% else %}
                 <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" alt="avatar-photo" id="img-profile-preview" class="">
             {% endif %}

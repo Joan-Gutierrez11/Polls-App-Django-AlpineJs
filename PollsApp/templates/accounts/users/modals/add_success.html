@@ -1,0 +1,21 @@
+{% extends 'base/components/modal.html' %}
+
+{% block 'modal-content' %}
+    <div class="modal-body">
+        <div class="d-flex">
+            <div class="m-3 icon d-flex justify-content-center">
+                <i class="info bi bi-info-circle-fill"></i>
+            </div>
+            <div class="message-info d-flex align-items-center">
+                {% for msg in messages %}
+                    <h4>{{ msg }}</h4>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stay Here</button>
+        <a href="{% url 'accounts:list-users' %}" type="button" class="btn btn-primary">Go Back</a>
+    </div>
+{% endblock  %}
+    

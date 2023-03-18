@@ -12,7 +12,7 @@ class AbstractFilterClass(ABC):
     '''
     Abtract class for filter class. Is necessary implement 'get_filter' method
     '''
-    
+
     @abstractmethod
     def get_filter(self, query: dict) -> models.Q:
         raise NotImplementedError

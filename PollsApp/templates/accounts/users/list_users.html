@@ -6,6 +6,7 @@
 {% block 'css-styles' %}
     <link rel="stylesheet" href="{% static 'accounts/css/users.css' %}">
     <link rel="stylesheet" href="{% static 'shared/css/modals.css' %}">
+    <link rel="stylesheet" href="{% static 'shared/css/pagination.css' %}">
 {% endblock  %}
 
 {% block 'title' %} Users {% endblock %}
@@ -13,9 +14,9 @@
 {% block 'content' %}
     
     {% if messages %}
-        {% modal %}
-            {% include 'accounts/users/delete_success.html' with messages=messages %}
-        {% endmodal %}
+        {% with messages as messages %}
+            {% include 'accounts/users/modals/delete_success.html'%}
+        {% endwith %}
     {% endif %}
 
     <div>
@@ -59,7 +60,7 @@
                                     <i class="bi bi-arrow-clockwise me-2"></i>Reset
                                 </button>
                                 <button class="btn btn-outline-secondary me-2" type="submit">
-                                    <i class="bi bi-search me-2"></i>Search
+                                    <i class="bi bi-search me-0"></i>Search
                                 </button>
                             </div>
                         </form>
@@ -138,6 +139,7 @@
         </section>
     </div>
 
+    <!-- Modal block -->
     <div class="modal fade" id="info-modal" tabindex="-1" aria-labelledby="modal" data-bs-backdrop="static" data-bs-keyboard="false" 
         aria-hidden="true" role="dialog"></div>
 

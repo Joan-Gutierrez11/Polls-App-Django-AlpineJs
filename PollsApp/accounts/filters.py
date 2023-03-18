@@ -4,16 +4,6 @@ from accounts.models import User
 
 from core.filters import AbstractFilterClass
 
-class UserFilterByUsernameAndEmail(AbstractFilterClass):
-
-    def get_filter(self, query):
-        return Q(username__contains=query.get('username_email')) \
-            | Q(email__contains=query.get('username_email'))
-
-    class Meta:
-        model = User
-
-
 class UserFilter(AbstractFilterClass):
 
     def get_filter(self, query):
@@ -25,7 +15,6 @@ class UserFilter(AbstractFilterClass):
         if query.get('type_user'):
             _filter &= Q(type_user=query.get('type_user'))        
         return _filter
-
 
     class Meta:
         model = User

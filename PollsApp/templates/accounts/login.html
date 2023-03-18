@@ -1,5 +1,31 @@
 {% extends 'base/base.html' %}
 
-{% block 'body-content' %}
-    <h1>Login</h1>
+{% block 'title' %} Login {% endblock %}
+
+{% block 'body-content' %}    
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+                  <form action="{% url 'accounts:login' %}" method="POST">
+                    {% csrf_token %}
+                    <h3 class="mb-5">Sign in</h3>
+                    <div class="form-outline mb-4">
+                        <input type="text" name="username" id="typeUsername-2" class="form-control form-control-lg" />
+                        <label class="form-label" for="typeUsername-2">Username</label>
+                    </div>      
+                    <div class="form-outline mb-4">
+                        <input type="password" name="password" id="typePasswordX-2" class="form-control form-control-lg" autocomplete="on"/>
+                        <label class="form-label" for="typePasswordX-2">Password</label>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
 {% endblock %}

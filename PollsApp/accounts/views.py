@@ -2,26 +2,33 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from core.filters import FilterListView
 
-from accounts.forms import FilterUserForm, UserCreateForm
+from accounts.forms import FilterUserForm, UserForm
 from accounts.models import User
 
-class UserListView(FilterListView):
+class UserListView(LoginRequiredMixin, FilterListView):
     '''
     View that show the users registered in page
     '''
+    login_url = reverse_lazy('accounts:login')
     template_name = 'accounts/users/list_users.html'
     context_object_name = 'users'
     paginate_by = 10
     filter_form_class = FilterUserForm
 
-class CreateAdminUserView(CreateView):
+class CreateAdminUserView(LoginRequiredMixin, CreateView):
+    '''
+    View for create a new user admin
+    '''
+    login_url = reverse_lazy('accounts:login')
     template_name = 'accounts/users/add_users.html'
-    form_class = UserCreateForm
+    form_class = UserForm
     success_url = reverse_lazy('accounts:add-users')
 
     def form_valid(self, form):
@@ -32,10 +39,13 @@ class CreateAdminUserView(CreateView):
         messages.error(self.request, 'Error when create user. Please check the following fields:')
         return super(CreateAdminUserView, self).form_invalid(form)
 
-class UpdateAdminUserView(UpdateView):
+class UpdateAdminUserView(LoginRequiredMixin, UpdateView):
+    '''
+    '''
+    login_url = reverse_lazy('accounts:login')
     template_name = 'accounts/users/update_users.html'
     model = User
-    form_class = UserCreateForm
+    form_class = UserForm
 
     def _handle_photo_on_error(self, form):
         self.object.photo = form.initial.get("photo", None)
@@ -52,7 +62,10 @@ class UpdateAdminUserView(UpdateView):
         self._handle_photo_on_error(form)
         return super(UpdateAdminUserView, self).form_invalid(form)
 
-class DeleteAdminUserView(DeleteView):
+class DeleteAdminUserView(LoginRequiredMixin, DeleteView):
+    '''
+    '''
+    login_url = reverse_lazy('accounts:login')
     template_name = "accounts/users/delete_users.html"
     model = User
     context_object_name = 'user'
@@ -62,7 +75,10 @@ class DeleteAdminUserView(DeleteView):
         messages.success(self.request, f'User ({self.get_object()}) deleted sucessfully')
         return super().form_valid(form)
 
-class DisableUserAdminView(DeleteView):
+class DisableUserAdminView(LoginRequiredMixin, DeleteView):
+    '''
+    '''
+    login_url = reverse_lazy('accounts:login')
     template_name = "accounts/users/disable_users.html"
     model = User
     context_object_name = 'user'

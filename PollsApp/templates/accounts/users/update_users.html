@@ -12,9 +12,9 @@
 {% block 'content' %}
 
     {% if messages and form.errors %}
-        {% include 'base/components/form-fail-modal.html' with messages=messages form=form %}
+        {% include 'base/components/form-fail-modal.html' %}
     {% elif messages %}
-        {% include 'accounts/users/modals/update_success.html' with messages=messages %}
+        {% include 'accounts/users/modals/update_success.html' %}
     {% endif %}
 
     <section class="p-3">

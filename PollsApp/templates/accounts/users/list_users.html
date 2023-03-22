@@ -14,9 +14,7 @@
 {% block 'content' %}
     
     {% if messages %}
-        {% with messages as messages %}
-            {% include 'accounts/users/modals/delete_success.html'%}
-        {% endwith %}
+        {% include 'accounts/users/modals/delete_success.html'%}
     {% endif %}
 
     <div>
@@ -59,8 +57,8 @@
                                     x-on:click="location.href = '{% url 'accounts:list-users' %}'">
                                     <i class="bi bi-arrow-clockwise me-2"></i>Reset
                                 </button>
-                                <button class="btn btn-outline-secondary me-2" type="submit">
-                                    <i class="bi bi-search me-0"></i>Search
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="bi bi-search me-2"></i>Search
                                 </button>
                             </div>
                         </form>
@@ -116,8 +114,12 @@
                                             onclick="chargePageModalByURL('{% url 'accounts:delete-users' user.id %}', '#info-modal')">
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-warning me-3 fs-5"
-                                            {% if not user.is_active %} disabled {% endif %}
+                                        <button type="button"
+                                            {% if not user.is_active %}
+                                                class="btn btn-outline-secondary me-3 fs-5" disabled 
+                                            {% else %} 
+                                                class="btn btn-outline-warning me-3 fs-5" 
+                                            {% endif %}
                                             onclick="chargePageModalByURL('{% url 'accounts:safe-delete-users' user.id %}', '#info-modal')" >
                                             <i class="bi bi-lock-fill"></i>    
                                         </button>

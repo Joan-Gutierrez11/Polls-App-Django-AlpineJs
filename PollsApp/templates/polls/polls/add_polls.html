@@ -1,0 +1,120 @@
+{% extends 'base/base-admin.html' %}
+
+{% load static %}
+{% load admin_tags %}
+
+{% block 'css-styles' %}
+    
+{% endblock  %}
+
+{% block 'title' %} Add Users {% endblock %}
+
+{% block 'content' %}
+
+    {% if messages and form.errors %}
+        {% include 'base/components/form-fail-modal.html' %}
+    {% elif messages %}        
+        {% comment %} {% include 'accounts/users/modals/add_success.html' %} {% endcomment %}
+    {% endif %}
+
+    <section class="p-3">
+        <h1>Add Poll</h1>
+        <hr class="hr my-2"/>
+    </section>
+
+    <section class="px-3 mb-3">
+        <div x-data="QuestionOptionComponent">
+            <div class="my-4 px-3 d-flex justify-content-center">
+                <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" alt="avatar-photo" id="img-profile-preview" class="">
+            </div>
+            <form action="{% url 'polls:add-polls' %}" method="post" enctype="multipart/form-data" id="poll-form">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if field.name != 'questions_objects'  %}
+                        <div class="mb-3 row">
+                            <label for="{{ field.id_for_label }}" class="col-sm-2 col-form-label">{{ field.label }}:</label>
+                            <div class="col-sm-10 {% if field.name == 'is_active' %} form-check form-switch ps-3 {% endif %}">
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <div class="text-danger">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="mb-3 row">
+                            {{ field }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <template x-for="(question, question_index) in questions" :key="question_index">
+                    <div class="border rounded-3 p-3 mb-3">
+                        <div class="mb-3 row">
+                            <div class="my-2 d-flex justify-content-between">
+                                <h4 x-text="`Question ${question_index+1}`"></h4>
+                                <button type="button" class="btn btn-light" @click="removeQuestion(question_index)" title="Delete Question">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="" class="col-sm-2 col-form-label">Sentence:</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="" class="form-control" x-model="question.sentence">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="" class="col-sm-2 col-form-label">Type Question:</label>
+                            <div class="col-sm-10">
+                                <select name="" id="1" class="form-select" x-model="question.type_question">
+                                    <option value="" selected disabled>---</option>
+                                    <option value="multiple-opt">Multiple choices</option>
+                                    <option value="unique-opt">Unique choice</option>
+                                </select>
+                            </div>
+                        </div>
+                        <template x-for="(option, index_option) in question.options" :key="index_option">
+                            <div class="mb-3 row">
+                                <label for="" class="col-sm-2 col-form-label" x-text="`Option ${index_option+1}`"></label>
+                                <div class="col-sm-10">
+                                    <div class="d-flex">
+                                        <input type="text" id="" class="form-control me-2" x-model="option.sentence">
+                                        <button type="button" class="btn btn-danger" @click="removeOption(question_index, index_option)" title="Delete Option">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <div class="mb-3 row">
+                            <div class="col d-flex justify-content-end">
+                                <button type="button" class="btn btn-primary btn-lg" @click="addEmptyOption(question_index)" title="Add Option">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="mt-3 d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary btn-lg" @click="addEmptyQuestion()" title="Add Question">
+                        <i class="bi bi-file-earmark-plus me-2"></i> Add Question
+                    </button>
+                </div>
+    
+                <button type="button" class="mt-4 btn btn-primary btn-lg" x-bind="buttonAction">
+                    <i class="bi bi-plus-circle-fill me-2"></i>Add Poll
+                </button>
+            </form>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block 'js-scripts' %}
+    <script>
+        imagePreview({ imgSelector:'#img-profile-preview', fileInputSelector:"input[name='photo']" });
+    </script>
+    <script src="{% static 'polls/js/polls.js' %}"></script>
+{% endblock %}

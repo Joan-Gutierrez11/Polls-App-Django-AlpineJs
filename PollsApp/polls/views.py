@@ -2,12 +2,21 @@ from django.shortcuts import render
 
 from django.urls import reverse_lazy
 
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from polls.forms import PollForm
+
+from accounts.authetication import AdminLoginRequiredMixin
+
 
 # Create your views here.
-class IndexView(LoginRequiredMixin, TemplateView):
-    login_url = reverse_lazy('accounts:login')
+class IndexView(AdminLoginRequiredMixin, TemplateView):
     template_name = 'base/index.html'
 
+class ListPollsView(AdminLoginRequiredMixin, TemplateView):
+    template_name = 'polls/polls/list_polls.html'
+
+class CreatePollView(AdminLoginRequiredMixin, CreateView):
+    template_name = 'polls/polls/add_polls.html'
+    form_class = PollForm
+    success_url = reverse_lazy('polls:add-polls')

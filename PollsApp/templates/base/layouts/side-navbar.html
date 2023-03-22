@@ -3,12 +3,16 @@
 <nav class="navbar d-grid py-3 h-100">
     <div class="header-navbar my-2 px-3">
         <div class="text-center">
-            <img src="{% static 'shared/images/avatar-imagen.jpg' %}" alt="avatar-imagen">
+            {% if request.user.photo %}
+                <img src="{{ request.user.photo.url }}" alt="avatar-imagen">
+            {% else %}
+                <img src="{% static 'shared/images/avatar-imagen.jpg' %}" alt="avatar-imagen">
+            {% endif %}
         </div>
         <div class="d-flex flex-column">
-            <span>{{ user.username|default:'Username' }}</span>
+            <span>{{ request.user.username|default:'Username' }}</span>
             <span>
-                {% if user.is_active %}
+                {% if request.user.is_active %}
                     <span class="badge bg-success">Active</span>
                 {% endif %}
             </span>
@@ -37,7 +41,7 @@
         <li class="nav-item" data-section="polls"
             x-on:click="sectionSelected = $el.dataset.section"
             x-bind:class="sectionSelected == $el.dataset.section && 'active'">
-            <a class="nav-link p-4" href="#">
+            <a class="nav-link p-4" href="{% url 'polls:list-polls' %}">
                 <i class="bi bi-clipboard-check-fill"></i>
                 <span>Polls</span>
             </a>

@@ -1,0 +1,16 @@
+{% extends 'base/base-admin.html' %}
+
+{% block 'content' %}
+    <div>
+        <section class="p-3">
+            <div class="d-flex justify-content-between">
+                <h1>Polls</h1>
+                <a href="{% url 'polls:add-polls' %}" role="button" class="btn btn-success fs-4">
+                    <i class="me-3 bi bi-database-fill-add"></i>
+                    <span>Add Poll</span>
+                </a>
+            </div>
+            <hr class="hr my-2"/>
+        </section>
+    </div>
+{% endblock %}

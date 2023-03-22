@@ -1,10 +1,17 @@
 from django import forms
 from django.http import QueryDict
+from django.contrib.auth.forms import AuthenticationForm
 
 from core.filters import FilterForm
-
 from accounts.filters import UserFilter
 from accounts.models import User
+
+class LoginForm(AuthenticationForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control form-control-lg'
 
 class FilterUserForm(FilterForm):
     OPTIONS = [('', 'Default'),] + User.TypeUsers.choices 

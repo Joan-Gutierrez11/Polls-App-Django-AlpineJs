@@ -11,22 +11,21 @@ from core.filters import FilterListView
 
 from accounts.forms import FilterUserForm, UserForm
 from accounts.models import User
+from accounts.authetication import AdminLoginRequiredMixin
 
-class UserListView(LoginRequiredMixin, FilterListView):
+class UserListView(AdminLoginRequiredMixin, FilterListView):
     '''
     View that show the users registered in page
     '''
-    login_url = reverse_lazy('accounts:login')
     template_name = 'accounts/users/list_users.html'
     context_object_name = 'users'
     paginate_by = 10
     filter_form_class = FilterUserForm
 
-class CreateAdminUserView(LoginRequiredMixin, CreateView):
+class CreateAdminUserView(AdminLoginRequiredMixin, CreateView):
     '''
     View for create a new user admin
     '''
-    login_url = reverse_lazy('accounts:login')
     template_name = 'accounts/users/add_users.html'
     form_class = UserForm
     success_url = reverse_lazy('accounts:add-users')
@@ -39,10 +38,9 @@ class CreateAdminUserView(LoginRequiredMixin, CreateView):
         messages.error(self.request, 'Error when create user. Please check the following fields:')
         return super(CreateAdminUserView, self).form_invalid(form)
 
-class UpdateAdminUserView(LoginRequiredMixin, UpdateView):
+class UpdateAdminUserView(AdminLoginRequiredMixin, UpdateView):
     '''
     '''
-    login_url = reverse_lazy('accounts:login')
     template_name = 'accounts/users/update_users.html'
     model = User
     form_class = UserForm
@@ -62,10 +60,9 @@ class UpdateAdminUserView(LoginRequiredMixin, UpdateView):
         self._handle_photo_on_error(form)
         return super(UpdateAdminUserView, self).form_invalid(form)
 
-class DeleteAdminUserView(LoginRequiredMixin, DeleteView):
+class DeleteAdminUserView(AdminLoginRequiredMixin, DeleteView):
     '''
     '''
-    login_url = reverse_lazy('accounts:login')
     template_name = "accounts/users/delete_users.html"
     model = User
     context_object_name = 'user'
@@ -75,10 +72,9 @@ class DeleteAdminUserView(LoginRequiredMixin, DeleteView):
         messages.success(self.request, f'User ({self.get_object()}) deleted sucessfully')
         return super().form_valid(form)
 
-class DisableUserAdminView(LoginRequiredMixin, DeleteView):
+class DisableUserAdminView(AdminLoginRequiredMixin, DeleteView):
     '''
     '''
-    login_url = reverse_lazy('accounts:login')
     template_name = "accounts/users/disable_users.html"
     model = User
     context_object_name = 'user'

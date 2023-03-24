@@ -44,23 +44,23 @@ const LogoutButton = () => {
     }
 }
 
-$(window).on({
-    load: () => {
-        const windowWidth = $(window).width();
-        const docHeight = $(document).height();
+// $(window).on({
+//     load: () => {
+//         const windowWidth = $(window).width();
+//         const docHeight = $(document).height();
 
-        if(windowWidth <= 1050)
-            $('body').height(docHeight);
-        else 
-            $('body').css('height', '');
-    },
-    resize: () => {
-        const windowWidth = $(window).width();
-        const docHeight = $(document).height();
+//         if(windowWidth <= 1050)
+//             $('body').height(docHeight);
+//         else 
+//             $('body').css('height', '');
+//     },
+//     resize: () => {
+//         const windowWidth = $(window).width();
+//         const docHeight = $(document).height();
 
-        if(windowWidth <= 1050)
-            $('body').height(docHeight);
-        else 
-            $('body').css('height', '');
-    }
-})
+//         if(windowWidth <= 1050)
+//             $('body').height(docHeight);
+//         else 
+//             $('body').css('height', '');
+//     }
+// })

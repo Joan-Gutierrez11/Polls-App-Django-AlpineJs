@@ -1,3 +1,5 @@
+from typing import List
+
 from django.db import models
 
 from core.models import SafeDeleteModel

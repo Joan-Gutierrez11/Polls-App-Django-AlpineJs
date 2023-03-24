@@ -1,0 +1,8 @@
+:root {
+    --size-img-profile-form: 30%;
+}
+
+#img-profile-preview {
+    width: var(--size-img-profile-form);
+    height: var(--size-img-profile-form);
+}

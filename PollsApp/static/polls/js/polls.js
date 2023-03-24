@@ -1,49 +1,57 @@
-const QuestionOptionComponent = {
-    questions: [],
 
-    init(){
-        this.addEmptyQuestion(); 
-    },
+const QuestionOptionComponent = () => { 
+    return {
+        questions: [],
 
-    addEmptyQuestion(){
-        this.questions.push({
-            id:null,
-            sentence:'',
-            type_question:'',
-            options:[
-                {
-                    id:null,
-                    sentence:''
-                }
-            ],
-        });
-    },
+        init(){            
+            this.questions = this.getJsonQuestions('#questions') || [];
+            if (this.questions.length == 0)
+               this.addEmptyQuestion();
+        },
 
-    addEmptyOption(index){
-        this.questions[index].options.push({
-            id:null,
-            sentence:''
-        });
-    },
+        getJsonQuestions(id){
+            const elem = $(id);
+            if(elem.length)
+                return JSON.parse(elem.text());
+            return null;
+        },
 
-    removeQuestion(indexQuestion){
-        this.questions = this.questions.filter((_, i) => i !== indexQuestion);
-    },
+        addEmptyQuestion(){
+            this.questions.push({
+                id:null,
+                sentence:'',
+                type_question:'',
+                options:[
+                    {
+                        id:null,
+                        sentence:''
+                    }
+                ],
+            });
+        },
 
-    removeOption(indexQuestion, indexOption){
-        this.questions[indexQuestion].options = this.questions[indexQuestion]
-            .options.filter((_, i) => i !== indexOption);
-    },
+        addEmptyOption(index){
+            this.questions[index].options.push({
+                id:null,
+                sentence:''
+            });
+        },
 
-    
-    buttonAction:{
-        ['@click'](){
-            console.log(this.questions);
-            console.log(JSON.parse(JSON.stringify(this.questions)));
+        removeQuestion(indexQuestion){
+            this.questions = this.questions.filter((_, i) => i !== indexQuestion);
+        },
 
-            $('textarea[name=questions_objects]').val(JSON.stringify(this.questions));
-            $('#poll-form').submit()
-        }
-    },
-    
+        removeOption(indexQuestion, indexOption){
+            this.questions[indexQuestion].options = this.questions[indexQuestion]
+                .options.filter((_, i) => i !== indexOption);
+        },
+      
+        buttonAction:{
+            ['@click'](){
+                $('textarea[name=questions_objects]').val(JSON.stringify(this.questions));
+                $('#poll-form').submit();
+            }
+        },
+        
+    };
 };

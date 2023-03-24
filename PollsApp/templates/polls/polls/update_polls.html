@@ -15,7 +15,7 @@
     {% if messages and form.errors %}
         {% include 'base/components/form-fail-modal.html' %}
     {% elif messages %}        
-        {% include 'polls/polls/modals/add-success.html' %}
+        {% include 'polls/polls/modals/update-success.html' %}
     {% endif %}
 
     <section class="p-3">
@@ -28,7 +28,7 @@
             <div class="my-4 px-3 d-flex justify-content-center">
                 <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" alt="avatar-photo" id="img-profile-preview" class="">
             </div>
-            <form action="{% url 'polls:add-polls' %}" method="post" enctype="multipart/form-data" id="poll-form">
+            <form action="{% url 'polls:update-polls' poll.id %}" method="post" enctype="multipart/form-data" id="poll-form">
                 {% csrf_token %}
                 {% for field in form %}
                     {% if field.name != 'questions_objects'  %}
@@ -63,13 +63,13 @@
                         <div class="mb-3 row">
                             <label for="" class="col-sm-2 col-form-label">Sentence:</label>
                             <div class="col-sm-10">
-                                <input type="text" id="" class="form-control" x-model="question.sentence">
+                                <input type="text" required class="form-control" x-model="question.sentence">
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="" class="col-sm-2 col-form-label">Type Question:</label>
                             <div class="col-sm-10">
-                                <select name="" id="1" class="form-select" x-model="question.type_question">
+                                <select class="form-select" required x-model="question.type_question">
                                     <option value="" selected disabled>---</option>
                                     <option value="multiple-opt">Multiple choices</option>
                                     <option value="unique-opt">Unique choice</option>
@@ -81,7 +81,7 @@
                                 <label for="" class="col-sm-2 col-form-label" x-text="`Option ${index_option+1}`"></label>
                                 <div class="col-sm-10">
                                     <div class="d-flex">
-                                        <input type="text" id="" class="form-control me-2" x-model="option.sentence">
+                                        <input type="text" required class="form-control me-2" x-model="option.sentence">
                                         <button type="button" class="btn btn-danger" @click="removeOption(question_index, index_option)" title="Delete Option">
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
@@ -104,7 +104,7 @@
                     </button>
                 </div>
     
-                <button type="button" class="mt-4 btn btn-primary btn-lg" x-bind="buttonAction">
+                <button type="submit" class="mt-4 btn btn-primary btn-lg" x-bind="buttonAction">
                     <i class="bi bi-plus-circle-fill me-2"></i>Add Poll
                 </button>
             </form>
@@ -118,4 +118,6 @@
         imagePreview({ imgSelector:'#img-profile-preview', fileInputSelector:"input[name='image']" });
     </script>
     <script src="{% static 'polls/js/polls.js' %}"></script>
+
+    {{ questions_serialized|json_script:"questions" }}
 {% endblock %}

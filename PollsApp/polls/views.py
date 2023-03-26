@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.core import serializers
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.views.generic import TemplateView, CreateView, UpdateView, ListView, DeleteView
 
 from polls.forms import PollForm
 from polls.models import *
@@ -17,8 +17,13 @@ import json
 class IndexView(AdminLoginRequiredMixin, TemplateView):
     template_name = 'base/index.html'
 
-class ListPollsView(AdminLoginRequiredMixin, TemplateView):
+class ListPollsView(AdminLoginRequiredMixin, ListView):
     template_name = 'polls/polls/list_polls.html'
+    context_object_name = 'polls'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Poll.objects.all()
 
 class CreatePollView(AdminLoginRequiredMixin, CreateView):
     template_name = 'polls/polls/add_polls.html'
@@ -54,3 +59,13 @@ class UpdatePollView(UpdateView):
     def form_invalid(self, form):
         messages.error(self.request, 'Error when update poll. Please check the following fields:')
         return super().form_invalid(form)
+
+class DeletePollView(DeleteView):
+    template_name = 'polls/polls/delete_polls.html'
+    model = Poll
+    context_object_name = 'poll'
+    success_url = reverse_lazy('polls:list-polls')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f"Poll '{self.get_object().title}' has been delete.")
+        return super().form_valid(form)

@@ -1,8 +1,18 @@
 :root {
-    --size-img-profile-form: 30%;
+    --size-img-poll-form: 30%;
+    --size-img-poll-table: 50%;
 }
 
-#img-profile-preview {
-    width: var(--size-img-profile-form);
-    height: var(--size-img-profile-form);
+#img-poll-preview {
+    width: var(--size-img-poll-form);
+    height: var(--size-img-poll-form);
+}
+
+.img-poll {
+    width: var(--size-img-poll-table);
+    height: var(--size-img-poll-table);
+}
+
+.image-cell {
+    width: 15rem;
 }

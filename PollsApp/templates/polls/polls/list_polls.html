@@ -1,6 +1,20 @@
 {% extends 'base/base-admin.html' %}
 
+{% load static %}
+{% load admin_tags %}
+
+{% block 'css-styles' %}
+    <link rel="stylesheet" href="{% static 'polls/css/polls.css' %}">
+    <link rel="stylesheet" href="{% static 'shared/css/modals.css' %}">
+    <link rel="stylesheet" href="{% static 'shared/css/pagination.css' %}">
+{% endblock  %}
+
 {% block 'content' %}
+
+    {% if messages %}
+        {% include 'polls/polls/modals/delete-success.html'%}
+    {% endif %}
+
     <div>
         <section class="p-3">
             <div class="d-flex justify-content-between">
@@ -12,5 +26,61 @@
             </div>
             <hr class="hr my-2"/>
         </section>
+
+        <section class="px-3 mb-4">
+            <div class="table-responsive sticky-table-header">
+                <table class="table">
+                    <thead class="table-header-divider">
+                      <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date Created</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {% for poll in polls %}
+                            <tr>
+                                <td class="image-cell">
+                                    {% if poll.image %}
+                                        <img src="{{ poll.image.url }}" alt="{{poll.title}}" class="img-fluid img-poll ps-2">
+                                    {% else %}
+                                        <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" alt="{{poll.title}}" class="img-fluid img-poll ps-2">
+                                    {% endif %}                                    
+                                </td>
+                                <td>{{poll.title}}</td>
+                                <td>{{poll.description}}</td>
+                                <td>{{poll.date_created}}</td>
+                                <td>
+                                    <div class="d-flex w-100">
+                                        <a href="{% url 'polls:update-polls' poll.id %}" 
+                                            role="button" class="btn btn-outline-success me-3 fs-5">
+                                            <i class="bi bi-arrow-bar-up"></i>
+                                        </a>
+                                        <button class="btn btn-outline-danger me-3 fs-5"
+                                            onclick="chargePageModalByURL('{% url 'polls:delete-polls' poll.id %}', '#info-modal')">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5">No polls found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>    
+            </div>
+        </section>
+
+        <section class="d-flex justify-content-end my-2 px-3 pagination-users">
+            {% pagination %}
+        </section>
     </div>
+
+    <!-- Modal block -->
+    <div class="modal fade" id="info-modal" tabindex="-1" aria-labelledby="modal" data-bs-backdrop="static" data-bs-keyboard="false" 
+        aria-hidden="true" role="dialog"></div>
 {% endblock %}

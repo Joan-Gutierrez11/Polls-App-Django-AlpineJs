@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'shared/css/modals.css' %}">
 {% endblock  %}
 
-{% block 'title' %} Add Poll {% endblock %}
+{% block 'title' %} Update Poll {% endblock %}
 
 {% block 'content' %}
 
@@ -19,14 +19,18 @@
     {% endif %}
 
     <section class="p-3">
-        <h1>Add Poll</h1>
+        <h1>Update Poll</h1>
         <hr class="hr my-2"/>
     </section>
 
     <section class="px-3 mb-3">
         <div x-data="QuestionOptionComponent">
             <div class="my-4 px-3 d-flex justify-content-center">
-                <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" alt="avatar-photo" id="img-profile-preview" class="">
+                {% if poll.image %}
+                    <img src="{{ poll.image.url }}" alt="{{ poll.title }}" id="img-poll-preview">
+                {% else %}
+                    <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" alt="avatar-photo" id="img-poll-preview" class="">
+                {% endif %}
             </div>
             <form action="{% url 'polls:update-polls' poll.id %}" method="post" enctype="multipart/form-data" id="poll-form">
                 {% csrf_token %}
@@ -105,7 +109,7 @@
                 </div>
     
                 <button type="submit" class="mt-4 btn btn-primary btn-lg" x-bind="buttonAction">
-                    <i class="bi bi-plus-circle-fill me-2"></i>Add Poll
+                    <i class="bi bi-plus-circle-fill me-2"></i>Update
                 </button>
             </form>
         </div>
@@ -114,10 +118,9 @@
 {% endblock %}
 
 {% block 'js-scripts' %}
-    <script>
-        imagePreview({ imgSelector:'#img-profile-preview', fileInputSelector:"input[name='image']" });
-    </script>
     <script src="{% static 'polls/js/polls.js' %}"></script>
-
     {{ questions_serialized|json_script:"questions" }}
+    <script>
+        imagePreview({ imgSelector:'#img-poll-preview', fileInputSelector:"input[name='image']" });
+    </script>
 {% endblock %}

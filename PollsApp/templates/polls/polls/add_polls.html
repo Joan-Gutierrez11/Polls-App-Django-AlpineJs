@@ -26,7 +26,7 @@
     <section class="px-3 mb-3">
         <div x-data="QuestionOptionComponent">
             <div class="my-4 px-3 d-flex justify-content-center">
-                <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" alt="avatar-photo" id="img-profile-preview" class="">
+                <img src="{% static 'shared/images/avatar-photo-empty.jpg' %}" alt="avatar-photo" id="img-poll-preview" class="">
             </div>
             <form action="{% url 'polls:add-polls' %}" method="post" enctype="multipart/form-data" id="poll-form">
                 {% csrf_token %}
@@ -115,7 +115,7 @@
 
 {% block 'js-scripts' %}
     <script>
-        imagePreview({ imgSelector:'#img-profile-preview', fileInputSelector:"input[name='image']" });
+        imagePreview({ imgSelector:'#img-poll-preview', fileInputSelector:"input[name='image']" });
     </script>
     <script src="{% static 'polls/js/polls.js' %}"></script>
 {% endblock %}

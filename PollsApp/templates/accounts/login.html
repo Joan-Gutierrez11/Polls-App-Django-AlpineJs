@@ -20,20 +20,20 @@
             <div class="card shadow-2-strong" style="border-radius: 1rem;">
               <div class="card-body p-5 text-center">
                 <form action="{% url 'accounts:login' %}" method="POST">
-                  {% csrf_token %}
-                  <h3 class="mb-5">Sign in</h3>
+                    {% csrf_token %}
+                    <h3 class="mb-5">Sign in</h3>
                   
-                  {% for field in form %}
-                    <div class="form-outline mb-4">
-                      {{ field }}
-                      <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                      {% for error in field.errors %}
-                          <div class="text-danger">{{ error }}</div>
-                      {% endfor %}
-                    </div>
-                  {% endfor %}
+                    {% for field in form %}
+                        <div class="form-outline mb-4">
+                        {{ field }}
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {% for error in field.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                        </div>
+                    {% endfor %}
 
-                  <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
                 </form>
               </div>
             </div>

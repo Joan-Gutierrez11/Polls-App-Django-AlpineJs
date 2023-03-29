@@ -1,0 +1,96 @@
+{% extends 'base/base-admin.html' %}
+
+{% load static %}
+
+{% block 'css-styles' %}
+    <link rel="stylesheet" href="{% static 'polls/css/main-dashboard.css' %}">
+{% endblock %}
+
+{% block 'js-headers-scripts' %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+{% endblock  %}
+
+{% block 'content' %}
+    <section class="p-3">
+        <div class="d-flex justify-content-between">
+            <h1>Principal View</h1>
+        </div>
+        <hr class="hr my-2"/>
+    </section>
+    <section class="p-3">
+        <div class="mb-5">
+            <h3>Info</h3>
+        </div>
+
+        <div class="row gap-3">
+            <div class="col-12 col-lg">
+                <div class="card">
+                    <div class="icon-card" id="users-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{ users_count }} Users</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Registered in this system</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg">
+                <div class="card">
+                    <div class="icon-card" id="polls-icon">
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{ polls_count }} Polls</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Have been created</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg">
+                <div class="card">
+                    <div class="icon-card" id="question-icon">
+                        <i class="bi bi-file-earmark-diff-fill"></i>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{ questions_count }} Questions</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Have been created</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="p-3">
+        <div class="mb-5">
+            <h3>Charts</h3>
+        </div>
+        <div class="row" id="charts"> 
+            <div class="col-6 col-md">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="polls-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="users-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block 'js-scripts' %}
+    <script src="{% static 'polls/js/main-dashboard.js' %}"></script>
+    <script>
+        buildPollChart(`{% url 'polls:api-private-list-polls' %}`);
+        buildUsersChart(`{% url 'accounts:api-private-list-users' %}`)
+    </script>
+{% endblock %}

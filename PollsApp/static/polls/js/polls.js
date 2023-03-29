@@ -1,5 +1,5 @@
 
-const QuestionOptionComponent = (urlForm) => { 
+const QuestionOptionComponent = () => { 
     return {
         questions: [],
 

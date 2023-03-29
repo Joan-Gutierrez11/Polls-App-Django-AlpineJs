@@ -10,12 +10,23 @@ from polls.models import *
 from polls.serializers import QuestionSerializer
 
 from accounts.authetication import AdminLoginRequiredMixin
+from accounts.models import User
 
 import json
 
 # Create your views here.
-class IndexView(AdminLoginRequiredMixin, TemplateView):
-    template_name = 'base/index.html'
+class MainDashboardView(AdminLoginRequiredMixin, TemplateView):
+    template_name = 'polls/main/main-page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['polls_count'] = Poll.objects.count()
+        context['questions_count'] = Question.objects.count()
+        context['users_count'] = User.objects.count()
+
+        print(context)
+        return context
+    
 
 class ListPollsView(AdminLoginRequiredMixin, ListView):
     template_name = 'polls/polls/list_polls.html'
@@ -38,7 +49,7 @@ class CreatePollView(AdminLoginRequiredMixin, CreateView):
         messages.error(self.request, 'Error when create poll. Please check the following fields:')
         return super().form_invalid(form)
 
-class UpdatePollView(UpdateView):
+class UpdatePollView(AdminLoginRequiredMixin, UpdateView):
     template_name = 'polls/polls/update_polls.html'
     model = Poll
     form_class = PollForm
@@ -60,7 +71,7 @@ class UpdatePollView(UpdateView):
         messages.error(self.request, 'Error when update poll. Please check the following fields:')
         return super().form_invalid(form)
 
-class DeletePollView(DeleteView):
+class DeletePollView(AdminLoginRequiredMixin, DeleteView):
     template_name = 'polls/polls/delete_polls.html'
     model = Poll
     context_object_name = 'poll'

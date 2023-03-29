@@ -24,6 +24,8 @@
     </section>
 
     <section class="px-3 mb-3">
+
+        <!-- Form Component-->
         <div x-data="QuestionOptionComponent">
             <div class="my-4 px-3 d-flex justify-content-center">
                 {% if poll.image %}
@@ -59,7 +61,7 @@
                         <div class="mb-3 row">
                             <div class="my-2 d-flex justify-content-between">
                                 <h4 x-text="`Question ${question_index+1}`"></h4>
-                                <button type="button" class="btn btn-light" @click="removeQuestion(question_index)" title="Delete Question">
+                                <button type="button" class="btn btn-outline-dark" @click="removeQuestion(question_index)" title="Delete Question">
                                     <i class="bi bi-x-lg"></i>
                                 </button>
                             </div>
@@ -113,6 +115,7 @@
                 </button>
             </form>
         </div>
+
     </section>
 
 {% endblock %}

@@ -1,0 +1,32 @@
+:root {
+    --length-icon-card: -15px;
+}
+
+.icon-card {
+    position: absolute;
+    left: var(--length-icon-card);
+    top: var(--length-icon-card);
+    padding: 1rem;
+    background-color: white;
+    border-radius: 10%;
+    font-size: 2rem;
+}
+
+.icon-card + .card-body {
+    margin-left: 2.5rem;
+    text-align: end;
+}
+
+.icon-card + .card-body h5 {
+    font-size: 2rem;
+}
+
+.icon-card + .card-body h6 {
+    font-size: 1.5rem;
+}
+
+.chart-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

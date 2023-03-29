@@ -13,3 +13,9 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ('id', 'type_question', 'sentence', 'options')
+
+class PollSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Poll
+        fields = '__all__'

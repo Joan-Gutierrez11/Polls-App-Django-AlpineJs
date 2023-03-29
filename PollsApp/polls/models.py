@@ -9,7 +9,7 @@ from core.models import SafeDeleteModel
 class Poll(SafeDeleteModel):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    image = models.ImageField(null=True)
+    image = models.ImageField(null=True, upload_to='polls/images/%Y/%m/%d')
     date_created = models.DateTimeField(auto_created=True, auto_now=True)
 
 class Question(models.Model):

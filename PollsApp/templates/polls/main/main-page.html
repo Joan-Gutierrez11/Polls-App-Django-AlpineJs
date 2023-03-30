@@ -91,6 +91,6 @@
     <script src="{% static 'polls/js/main-dashboard.js' %}"></script>
     <script>
         buildPollChart(`{% url 'polls:api-private-list-polls' %}`);
-        buildUsersChart(`{% url 'accounts:api-private-list-users' %}`)
+        buildUsersChart(`{% url 'accounts:api-private-list-users' %}`);
     </script>
 {% endblock %}

@@ -13,6 +13,11 @@ class LoginForm(AuthenticationForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control form-control-lg'
 
+    def confirm_login_allowed(self, user):
+        super().confirm_login_allowed(user)
+        if user.type_user != User.TypeUsers.Employee:
+            raise forms.ValidationError('This user is not allowed')
+
 class FilterUserForm(FilterForm):
     OPTIONS = [('', 'Default'),] + User.TypeUsers.choices 
     filter_class = UserFilter

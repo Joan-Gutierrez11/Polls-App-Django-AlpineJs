@@ -6,8 +6,16 @@ from django.urls import reverse_lazy
 
 from accounts.forms import LoginForm
 
+# 
+# Custom Login Required Mixin 
+# 
+
 class AdminLoginRequiredMixin(LoginRequiredMixin):
     login_url = reverse_lazy('accounts:login')
+
+# 
+# Views
+# 
 
 class AdminLoginView(LoginView):
     template_name = 'accounts/login.html'

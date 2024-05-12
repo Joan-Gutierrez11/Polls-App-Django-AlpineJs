@@ -1,3 +1,8 @@
+/**
+ * Return collapse filter component
+ * 
+ * @returns {any}
+ */
 const CollapseFilterSectionComponent = () => {
     return {
         filterOpen: Alpine.$persist(false).using(sessionStorage),

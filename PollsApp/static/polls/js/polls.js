@@ -1,5 +1,5 @@
 /**
- * Question Option Component 1
+ * Question Option Component 1,2
  * 
  * @returns {any}
  */

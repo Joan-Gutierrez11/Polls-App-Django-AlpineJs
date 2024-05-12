@@ -59,6 +59,11 @@ function buildPollChart(url) {
         .catch(console.error)
 }
 
+/**
+ * Build chart of user in main dashboard
+ * 
+ * @param {string} url 
+ */
 function buildUsersChart(url) {
     fetch(url)
         .then(res => res.json())

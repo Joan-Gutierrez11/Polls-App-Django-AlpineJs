@@ -1,4 +1,8 @@
-
+/**
+ * Question Option Component
+ * 
+ * @returns {any}
+ */
 const QuestionOptionComponent = () => { 
     return {
         questions: [],

@@ -59,3 +59,7 @@ const QuestionOptionComponent = () => {
         
     };
 };
+
+const utility = () => {
+    return 'Utility function';
+};
